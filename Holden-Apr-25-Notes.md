@@ -3,6 +3,11 @@
 
 I have had no trouble running the workflow with conda envs from the env.yaml. If you have trouble installing or snakmake trying to install envs that are already built. Try giving the rule the name of a conda env that already exists e.g. snakmake-8.20.4. Download bwa, picard, gatk, etc in here...
 
+you should install this executor plugin
+```
+pip install snakemake-executor-plugin-cluster-generic
+```
+
 
 I ran the test data before my run, which might have helped the above problem.
 
