@@ -8,6 +8,8 @@ you should install this executor plugin
 pip install snakemake-executor-plugin-cluster-generic
 ```
 
+If you have trouble solving mamba dependinces, you can use conda by specifying --conda-frontend conda. I have also found that specifying CONDA_CHANNEL_PRIORITY=flexible snakemake ... can help with dependency solve issues. Finally, manually installing the env into .snakemake/conda from the yaml file sometimes works when snakemake --create-conda-envs-only fails.
+
 
 I ran the test data before my run, which might have helped the above problem.
 
