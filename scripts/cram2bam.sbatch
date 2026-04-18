@@ -1,43 +1,46 @@
 #!/bin/bash
 #SBATCH --job-name=cram2bam
-#SBATCH --partition=csu96_alpine1
-#SBACTH --qos=normal
+#SBATCH --partition=amilan
+#SBATCH --qos=normal
+#SBATCH --account=csu96_alpine1
 #SBATCH --time=12:00:00
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=16G
-#SBATCH --array=1-436
+#SBATCH --array=1-422
 #SBATCH --output=logs/cram2bam_%A_%a.out
 #SBATCH --error=logs/cram2bam_%A_%a.err
 
 set -euo pipefail
 
+# my samtools version from mnm-smk is called samtools_mnm (see my fork of mnm-smk on github for .yaml)
 eval "$(mamba shell hook --shell=bash)"
 USERNAME="foxhol@colostate.edu"
 mamba activate /projects/${USERNAME}/miniforge3/envs/samtools_mnm
 
-REF="../../resources/genome.fasta"
+# specify reference genome
+REF="resources/genome.fasta"
+INDIR="results/bqsr-round-0/downsample-5.0X/overlap_clipped/"
 
-# list crams and pick one per task
-CRAM_LIST=($(ls *.cram | sort))
-CRAM=${CRAM_LIST[$SLURM_ARRAY_TASK_ID-1]}
+# grab a cram for each array task
+CRAM_LIST=(${INDIR}*.cram)
+INDEX=$((SLURM_ARRAY_TASK_ID - 1))
+CRAM=${CRAM_LIST[$INDEX]}
 
-# tell me the directory you want your bams to be in
-OUTDIR="../mkdup/"
+OUTDIR="results/bqsr-round-0/downsample-5.0X/overlap_clipped/"
 mkdir -p "$OUTDIR"
 
-# convert bam to cram
+
 BASE=$(basename "$CRAM" .cram)
 BAM="${OUTDIR}/${BASE}.bam"
 
 echo "Processing: $CRAM"
 echo "Output: $BAM"
 
-samtools view -@ $SLURM_CPUS_PER_TASK \
+# convert to BAM
+samtools view -@ "$SLURM_CPUS_PER_TASK" -b \
   -T "$REF" \
-  -b \
   -o "$BAM" \
   "$CRAM"
 
-# index the BAM
+# index it
 samtools index "$BAM"
 echo "Done: $BASE"
