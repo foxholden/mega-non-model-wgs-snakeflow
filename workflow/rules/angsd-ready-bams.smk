@@ -14,15 +14,14 @@
 # Simple clipping of overlaps in the mkduped BAMs
 rule clip_overlaps:
     input:
-        "results/bqsr-round-{bqsr_round}/mkdup/{sample}.bam"
+        "results/bqsr-round-{bqsr_round}/rmdup/{sample}.bam"
     output:
         bam="results/bqsr-round-{bqsr_round}/overlap_clipped/{sample}.bam",
         bai="results/bqsr-round-{bqsr_round}/overlap_clipped/{sample}.bam.bai"
     log:
         clip="results/bqsr-round-{bqsr_round}/logs/clip_overlaps/clip_overlap-{sample}.log",
         index="results/bqsr-round-{bqsr_round}/logs/clip_overlaps/index-{sample}.log"
-    conda:
-        "../envs/bamutil_samtools.yaml"
+    conda: "samtools_mnm"
     benchmark:
         "results/bqsr-round-{bqsr_round}/benchmarks/clip_overlaps/{sample}.bmk"
     shell:
@@ -58,8 +57,7 @@ rule make_species_specific_indel_vcfs:
         "results/bqsr-round-{bqsr_round}/logs/make_species_specific_indel_vcfs/{igrp}/{sg_or_chrom}.log",
     benchmark:
         "results/bqsr-round-{bqsr_round}/benchmarks/make_species_specific_indel_vcfs/{igrp}/selectvariants-{sg_or_chrom}.bmk"
-    conda:
-        "../envs/gatk4.2.6.1.yaml"
+    conda: "gatk4.2.6.1_mnm"
     shell:
         " IGRP={wildcards.igrp};                           "  
         " if [ $IGRP = \"__ALL\" ]; then                   "   # just hard-link the files in this case
@@ -89,8 +87,7 @@ rule get_known_indels:
         "results/bqsr-round-{bqsr_round}/logs/get_known_indels/{igrp}/{sg_or_chrom}.log",
     benchmark:
         "results/bqsr-round-{bqsr_round}/benchmarks/get_known_indels/bcftools-{igrp}-{sg_or_chrom}.bmk"
-    conda:
-        "../envs/bcftools.yaml"
+    conda: "bcftools_mnm"
     shell:
         "SAMP=$(bcftools query -l {input.indel} | head -n 1); "
         " bcftools view -Oz -s $SAMP {input.indel} > {output.vcf} 2> {log}; "
@@ -110,8 +107,7 @@ rule bcfconcat_known_indels:
         "results/bqsr-round-{bqsr_round}/benchmarks/bcfconcat_known_indels/bcf_concat-{igrp}.bmk",
     params:
         opts=" --naive "
-    conda:
-        "../envs/bcftools.yaml"
+    conda: "bcftools_mnm"
     shell:
         " (bcftools concat {params.opts} -Oz {input} > {output.vcf} 2> {log}; "
         " bcftools index -t {output.vcf})  2>> {log}; "

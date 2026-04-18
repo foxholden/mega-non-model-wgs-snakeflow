@@ -7,8 +7,7 @@ rule samtools_stats:
         "results/bqsr-round-{bqsr_round}/logs/samtools_stats/{sample}.log",
     benchmark:
         "results/bqsr-round-{bqsr_round}/benchmarks/samtools_stats/{sample}.bmk",
-    conda:
-        "../envs/samtools.yaml"
+    conda: "samtools_mnm"
     shell:
         "samtools stats {input} > {output} 2> {log} "
 
@@ -71,8 +70,7 @@ rule bcf_section_summaries:
         steps=len(unique_sample_ids) + 1
     benchmark:
         "results/bqsr-round-{bqsr_round}/benchmarks/bcftools_stats/{sg_or_chrom}-{filter_condition}.bmk",
-    conda:
-        "../envs/bcftools.yaml"
+    conda: "bcftools_mnm"
     shell:
         "bcftools view {params.filter_opt} -Ou {input} | "
         " bcftools stats -s {params.comma_samples} "
@@ -96,8 +94,7 @@ rule bcf_maf_section_summaries:
         steps=len(unique_sample_ids) + 1
     benchmark:
         "results/bqsr-round-{bqsr_round}/benchmarks/bcftools_stats/{sg_or_chrom}-maf-{maf}.bmk",
-    conda:
-        "../envs/bcftools.yaml"
+    conda: "bcftools_mnm"
     shell:
         " bcftools stats -s {params.comma_samples} "
         " -u NMISS:0:{params.stop}:{params.steps}  {input} > "
@@ -109,8 +106,7 @@ rule combine_bcftools_stats:
         expand("results/bqsr-round-{{bqsr_round}}/qc/bcftools_stats/sections/{sgc}-{{filter_condition}}.txt", sgc=unique_chromosomes + unique_scaff_groups)
     output:
         "results/bqsr-round-{bqsr_round}/qc/bcftools_stats/all-{filter_condition}.txt",
-    conda:
-        "../envs/bcftools.yaml"
+    conda: "bcftools_mnm"
     log:
         "results/bqsr-round-{bqsr_round}/logs/combine_bcftools_stats/{filter_condition}.log",
     shell:
@@ -123,7 +119,7 @@ rule combine_maf_bcftools_stats:
     output:
         "results/bqsr-round-{bqsr_round}/qc/bcftools_stats/all-pass-maf-{maf}.txt",
     conda:
-        "../envs/bcftools.yaml"
+        "bcftools_mnm"
     log:
         "results/bqsr-round-{bqsr_round}/logs/combine_maf_bcftools_stats/maf-{maf}.log",
     shell:

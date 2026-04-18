@@ -26,8 +26,7 @@ rule genome_faidx:
         "results/bqsr-round-0/logs/genome_faidx.log",
     benchmark:
         "results/bqsr-round-0/benchmarks/genome_faidx/genome_faidx.bmk",
-    conda:
-        "../envs/samtools.yaml"
+    conda: "samtools_mnm"
     shell:
         "samtools faidx {input}"
 
@@ -41,8 +40,7 @@ rule genome_dict:
         "results/bqsr-round-0/logs/genome_dict.log",
     benchmark:
         "results/bqsr-round-0/benchmarks/genome_dict/genome_dict.bmk"
-    conda:
-        "../envs/samtools.yaml"
+    conda: "samtools_mnm"
     shell:
         "samtools dict {input} > {output} 2> {log} "
 

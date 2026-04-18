@@ -8,8 +8,7 @@ rule trim_reads_pe:
         #r2_unpaired=temp("results/bqsr-round-{bqsr_round}/trimmed/{sample}---{unit}.2.unpaired.fastq.gz"),
         html="results/bqsr-round-{bqsr_round}/qc/fastp/{sample}---{unit}.html",
         json="results/bqsr-round-{bqsr_round}/qc/fastp/{sample}---{unit}.json"
-    conda:
-        "../envs/fastp.yaml"
+    conda: "fastp_mnm"
     log:
         out="results/bqsr-round-{bqsr_round}/logs/trim_reads_pe/{sample}---{unit}.log",
         err="results/bqsr-round-{bqsr_round}/logs/trim_reads_pe/{sample}---{unit}.err"
@@ -104,8 +103,7 @@ rule filter_and_sort_bams:
     log:
         "results/bqsr-round-{bqsr_round}/logs/filter_mapq/{sample}---{unit}.log"
     threads: 4
-    conda:
-        "../envs/samtools.yaml"
+    conda: "samtoools_mnm"
     shell:
         """
         samtools view -@ {threads} -q 30 -b {input} |
@@ -144,8 +142,7 @@ rule remove_duplicates:
         "results/bqsr-round-{bqsr_round}/benchmarks/remove_duplicates/{sample}.bmk"
     resources:
         cpus = 1
-    conda:
-        "../envs/samtools.yaml"
+    conda: "samtools_mnm"
     shell:
         """
         samtools view -@ {resources.cpus} -b -F 1024 {input.bam} > {output.bam} 2> {log}
