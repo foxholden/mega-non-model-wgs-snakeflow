@@ -2,12 +2,13 @@ executor: cluster-generic
 cluster-generic-submit-cmd:
   mkdir -p results/slurm_logs/{rule} &&
   sbatch
-    --partition=amilan,csu,amilan128c
-    --account=csu96_alpine1 # Holden's account
+    --partition=amilan
+    --account=csu96_alpine1
     --cpus-per-task={threads}
-    --mem={resources.mem_mb}
+    --mem={resources.mem_mb} 
     --time={resources.time}
     --job-name=smk-{rule}-{wildcards}
+    --qos=normal
     --output=results/slurm_logs/{rule}/{rule}-{wildcards}-%j.out
     --error=results/slurm_logs/{rule}/{rule}-{wildcards}-%j.err
     --parsable
@@ -38,9 +39,9 @@ set-threads:
   genomics_db_import_chromosomes: 16
   genomics_db_import_scaffold_groups: 10
   genomics_db2vcf_scattered: 10
-  mark_duplicates: 100 # High number of pcr duplicates
+  mark_duplicates: 10 # High number of pcr duplicates
   make_gvcf_sections: 10 # I have gone as low as 3 before
-  clip_overlaps: 24
+  clip_overlaps: 10
 
 set-resources:
   map_reads:
@@ -67,4 +68,4 @@ set-resources:
   mark_duplicates:
     mem_mb: 204800
   clip_overlaps:
-    mem_mb: 89760
+    mem_mb: 37400
