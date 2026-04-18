@@ -7,3 +7,6 @@ results
 resources/genome*
 .snakemake
 .rmd_snakemake
+logs/
+*.out
+*.err
