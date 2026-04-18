@@ -1,0 +1,7 @@
+name: samtools_mnm
+channels:
+  - conda-forge
+dependencies:
+  - samtools==1.19.1
+  - bamutil
+prefix: /projects/foxhol@colostate.edu/miniforge3/envs/samtools_mnm

@@ -1,0 +1,6 @@
+name: bcftools_mnm
+channels:
+  - conda-forge
+dependencies:
+  - bcftools==1.15.1
+prefix: /projects/foxhol@colostate.edu/miniforge3/envs/bcftools_mnm
