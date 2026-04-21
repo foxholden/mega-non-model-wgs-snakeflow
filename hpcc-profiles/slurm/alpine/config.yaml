@@ -40,7 +40,7 @@ set-threads:
   genomics_db_import_scaffold_groups: 10
   genomics_db2vcf_scattered: 10
   mark_duplicates: 10 # High number of pcr duplicates
-  make_gvcf_sections: 10 # I have gone as low as 3 before
+  make_gvcf_sections: 3 # I have gone as low as 3 before if 10 set mem_mb to 37400
   clip_overlaps: 10
 
 set-resources:
@@ -48,7 +48,7 @@ set-resources:
     mem_mb: 37400
     time: "'23:59:59'"
   make_gvcf_sections:
-    mem_mb: 37400
+    mem_mb: 11220
     time: "'23:59:59'"
   genomics_db_import_chromosomes:
     mem_mb: 59840
