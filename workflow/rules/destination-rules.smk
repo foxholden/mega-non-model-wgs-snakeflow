@@ -35,7 +35,7 @@ rule dest_scatter_intervals:
         binsize="{int_length}"
     #envmodules: "R/4.0.3"
     #test see if this helps
-    conda: "snakemake-8.25.3"
+    conda: "snakemake-8.20.4"
     output:
         tsv="results/scatter_config/scatters_{int_length}.tsv"
     log:
