@@ -103,7 +103,7 @@ rule filter_and_sort_bams:
     log:
         "results/bqsr-round-{bqsr_round}/logs/filter_mapq/{sample}---{unit}.log"
     threads: 4
-    conda: "samtoools_mnm"
+    conda: "samtools_mnm"
     shell:
         """
         samtools view -@ {threads} -q 30 -b {input} |

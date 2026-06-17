@@ -247,7 +247,7 @@ def get_read_group(wildcards):
 # from bqsr_round-{bqsr-round}/recal.
 def get_bams_for_calling(wildcards):
     if wildcards.bqsr_round == "0":
-        subd = "downsample-5.0X/overlap_clipped"
+        subd = "downsample-8.0X/overlap_clipped"
     else:
         subd = "recal"
     return { 
