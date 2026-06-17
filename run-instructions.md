@@ -5,7 +5,7 @@ For various reasons, I don't like snakemake handling my conda envs. It is not al
 
 Run create-envs.sh to create all the non-wrapper conda envs.
 ```
-bash create-envs.sh
+bash scripts/create_envs.sbatch
 ```
 
 ## Install snakemake 8 executor plugin
