@@ -41,7 +41,7 @@ set-threads:
   genomics_db2vcf_scattered: 10
   mark_duplicates: 10 # High number of pcr duplicates
   make_gvcf_sections: 3 # I have gone as low as 3 before if 10 set mem_mb to 37400
-  clip_overlaps: 10
+  clip_overlaps: 3
 
 set-resources:
   map_reads:
@@ -68,4 +68,4 @@ set-resources:
   mark_duplicates:
     mem_mb: 204800
   clip_overlaps:
-    mem_mb: 37400
+    mem_mb: 11220
