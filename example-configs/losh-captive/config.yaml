@@ -1,7 +1,7 @@
-units: "example-configs/losh-captive/units.tsv"
+units: "example-configs/losh-captive/units-mt7x.tsv"
 chromosomes: "example-configs/losh-captive/chromosomes.tsv"
 scaffold_groups: "example-configs/losh-captive/scaffold_groups.tsv"
-scatter_intervals_file: ""
+scatter_intervals_file: "example-configs/losh-captive/scatters_20000000.tsv"
 
 # this file is only needed when treating different samples
 # as different species, for indel realignment, etc.
@@ -36,7 +36,7 @@ maf_cutoffs: [0.05]
 # to specify some downsampling levels to do you can put them in the
 # depths list here.
 downsample_bams:
-  depths: []
+  depths: [8.0]
   bqsr_round: 0
 
 
