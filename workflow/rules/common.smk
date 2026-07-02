@@ -260,7 +260,7 @@ def get_bams_for_calling(wildcards):
 # holden modified this to calculate samtools stats from the deduped bams. This way coverage is calculated from deduped bams :)
 def get_bams_for_samtools_stats(wildcards):
     if wildcards.bqsr_round == "0":
-        subd = "rmdup"
+        subd = "overlap_clipped"
     else:
         subd = "recal"
     return "results/bqsr-round-{bqsr_round}/{subd}/{sample}.bam".format(
