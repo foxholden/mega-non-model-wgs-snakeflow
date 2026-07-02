@@ -252,7 +252,7 @@ def get_bams_for_calling(wildcards):
             bqsr_round = wildcards.bqsr_round,
             subd = subd,
             sample = wildcards.sample),
-        "bai": "results/bqsr-round-{bqsr_round}/{subd}/{sample}.bai".format(
+        "bai": "results/bqsr-round-{bqsr_round}/{subd}/{sample}.bam.bai".format(
             bqsr_round = wildcards.bqsr_round,
             subd = subd,
             sample = wildcards.sample)}
