@@ -205,9 +205,6 @@ def get_bcftools_stats_filter_option(wildcards):
     else:
         raise Exception("Wildcard filter_condition must be ALL, PASS, or FAIL.")
 
-
-
-
 ##### Helper functions #####
 def get_contigs():
     with checkpoints.genome_faidx.get().output[0].open() as fai:
@@ -247,7 +244,7 @@ def get_read_group(wildcards):
 # from bqsr_round-{bqsr-round}/recal.
 def get_bams_for_calling(wildcards):
     if wildcards.bqsr_round == "0":
-        subd = "downsample-8.0X/overlap_clipped"
+        subd = "overlap_clipped"
     else:
         subd = "recal"
     return { 
@@ -260,7 +257,7 @@ def get_bams_for_calling(wildcards):
             subd = subd,
             sample = wildcards.sample)}
 
-# holden modified this to calculate from rmdup, so that coverage is calculated for rmdup
+# holden modified this to calculate samtools stats from the deduped bams. This way coverage is calculated from deduped bams :)
 def get_bams_for_samtools_stats(wildcards):
     if wildcards.bqsr_round == "0":
         subd = "rmdup"
@@ -282,7 +279,7 @@ def get_bams_for_bqsr(wildcards):
     if wildcards.bqsr_round == "0":
         return("");
     elif wildcards.bqsr_round == "1":
-        subd="mkdup"
+        subd="rmdup"
     else: 
         subd="recal"
     bqr = int(wildcards.bqsr_round) - 1
